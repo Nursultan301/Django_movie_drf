@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from movie.models import Movie, Review, Rating
+from movie.models import Movie, Review, Rating, Actor
 
 
 class MovieListSerializers(serializers.ModelSerializer):
@@ -47,11 +47,27 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = ('name', "text", "children")
 
 
+class ActorListSerializer(serializers.ModelSerializer):
+    """ Вывод списка актеров и режиссеров """
+
+    class Meta:
+        model = Actor
+        fields = ('id', 'name', 'image')
+
+
+class ActorDetailSerializer(serializers.ModelSerializer):
+    """ Вывод полного описание актера и режиссеров """
+
+    class Meta:
+        model = Actor
+        fields = "__all__"
+
+
 class MovieDetailSerializers(serializers.ModelSerializer):
     """ Полный описание фильмов """
     category = serializers.SlugRelatedField(slug_field="title", read_only=True)
-    directors = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
-    actors = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
+    directors = ActorListSerializer(read_only=True, many=True)
+    actors = ActorListSerializer(read_only=True, many=True)
     genres = serializers.SlugRelatedField(slug_field="title", read_only=True, many=True)
     reviews = ReviewSerializer(many=True)
 
