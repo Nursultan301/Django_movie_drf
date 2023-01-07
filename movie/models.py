@@ -140,7 +140,7 @@ class Review(models.Model):
     name = models.CharField("Имя", max_length=50)
     text = models.TextField(max_length=5000)
     parent = models.ForeignKey("self", on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Родитель")
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name="Фильм")
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name="Фильм", related_name="reviews")
 
     class Meta:
         verbose_name = "Отзыв"
