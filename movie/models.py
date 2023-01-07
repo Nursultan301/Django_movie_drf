@@ -139,7 +139,9 @@ class Review(models.Model):
     email = models.EmailField("E-mail")
     name = models.CharField("Имя", max_length=50)
     text = models.TextField(max_length=5000)
-    parent = models.ForeignKey("self", on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Родитель")
+    parent = models.ForeignKey(
+        "self", on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Родитель", related_name='children'
+    )
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name="Фильм", related_name="reviews")
 
     class Meta:
