@@ -3,7 +3,7 @@ from rest_framework import serializers
 from movie.models import Movie, Review, Rating, Actor
 
 
-class MovieListSerializers(serializers.ModelSerializer):
+class MovieListSerializer(serializers.ModelSerializer):
     """ Список фильмов """
     rating_user = serializers.BooleanField()
     middle_star = serializers.IntegerField()
@@ -63,7 +63,7 @@ class ActorDetailSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class MovieDetailSerializers(serializers.ModelSerializer):
+class MovieDetailSerializer(serializers.ModelSerializer):
     """ Полный описание фильмов """
     category = serializers.SlugRelatedField(slug_field="title", read_only=True)
     directors = ActorListSerializer(read_only=True, many=True)
